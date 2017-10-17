@@ -384,6 +384,19 @@ defmodule StringTest do
     assert String.replace("ELIXIR", "", ".", global: false) == ".ELIXIR"
   end
 
+  test "remove/2" do
+    assert String.remove(".E.L.I.X.I.R.", ".") == "ELIXIR"
+    assert String.remove("a b c", " ") == "abc"
+    assert String.remove(" a b c ", " ") == "abc"
+    assert String.remove("ãéã", "é") == "ãã"
+
+    assert String.remove("Lorem ipsum", "ipsum") == "Lorem "
+    assert String.remove("Lorem ipsum, dolor sit", "ipsum,") == "Lorem  dolor sit"
+
+    assert String.remove("Lorem 123 ipsum", ~r/\d+/) == "Lorem  ipsum"
+    assert String.remove("abcd abce", ~r/c(?:d|e)/) == "ab ab"
+  end
+
   test "duplicate/2" do
     assert String.duplicate("abc", 0) == ""
     assert String.duplicate("abc", 1) == "abc"

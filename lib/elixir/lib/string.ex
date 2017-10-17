@@ -1179,6 +1179,26 @@ defmodule String do
     end
   end
 
+  @doc ~S"""
+  Returns a new string created by removing all occurrences of `pattern` in
+  `subject`.
+
+  The `pattern` may be a string or a regular expression.
+
+  ## Examples
+
+      iex> String.remove("a b c", " ")
+      "abc"
+
+      iex> String.remove("abcd abce", ~r/c(?:d|e)/)
+      "ab ab"
+
+  """
+  @spec remove(t, pattern | Regex.t()) :: t
+  def remove(subject, pattern) do
+    replace(subject, pattern, "")
+  end
+
   defp intersperse(subject, replacement) do
     case next_grapheme(subject) do
       {current, rest} -> [current, replacement | intersperse(rest, replacement)]
